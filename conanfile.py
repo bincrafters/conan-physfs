@@ -32,6 +32,7 @@ conan_basic_setup()""")
     def package(self):
         self.copy("physfs.h", dst="include", src=os.path.join(self.sourcename, "src"))
         if self.options.shared:
+            self.copy("*.dll", dst="bin", keep_path=False)
             self.copy("*.lib", dst="lib", keep_path=False, excludes="*-static.lib")
             self.copy("*.so", dst="lib", keep_path=False, symlinks=True)
             self.copy("*.dylib", dst="lib", keep_path=False, symlinks=True)
@@ -39,7 +40,6 @@ conan_basic_setup()""")
             self.copy("*-static.lib", dst="lib", keep_path=False)
             self.copy("*.a", dst="lib", keep_path=False)
         self.copy("*.pdb", dst="lib", keep_path=False)
-        self.copy("*.dll", dst="bin", keep_path=False)
 
     def package_info(self):
         self.cpp_info.libs = tools.collect_libs(self)
