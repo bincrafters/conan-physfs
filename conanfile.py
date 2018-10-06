@@ -34,7 +34,7 @@ conan_basic_setup()""")
         if self.options.shared:
             self.copy("*.dll", dst="bin", keep_path=False)
             self.copy("*.lib", dst="lib", keep_path=False, excludes="*-static.lib")
-            self.copy("*.so", dst="lib", keep_path=False, symlinks=True)
+            self.copy("*.so*", dst="lib", keep_path=False, symlinks=True)
             self.copy("*.dylib", dst="lib", keep_path=False, symlinks=True)
         else:
             self.copy("*-static.lib", dst="lib", keep_path=False)
