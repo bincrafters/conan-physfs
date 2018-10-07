@@ -3,7 +3,7 @@
 
 int main()
 {
-    if (PHYSFS_init(nullptr) != 0)
+    if (PHYSFS_init(NULL) != 0)
     {
         std::cout << "physfs successfully initialized!\n";
     }
