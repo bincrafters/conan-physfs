@@ -1,36 +1,38 @@
 from conans import ConanFile, CMake, tools
-import os.path
+import os
 
 
 class PhysfsConan(ConanFile):
     name = "physfs"
     version = "3.0.1"
-    license = "zlib"
-    url = "https://github.com/elizagamedev/conan-physfs"
+    license = "ZLIB"
+    url = "https://github.com/bincrafters/conan-physfs"
+    homepage = "https://icculus.org/physfs/"
+    author = "Bincrafters <bincrafters@gmail.com>"
     description = "Provides abstract access to various archives"
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False]}
     default_options = "shared=False"
     generators = "cmake"
+    exports = "LICENSE.md"
+    exports_sources = "CMakeLists.txt"
 
-    sourcename = "{}-{}".format(name, version)
+    source_subfolder = "source_subfolder"
+    build_subfolder = "build_subfolder"
 
     def source(self):
-        tools.get("https://icculus.org/physfs/downloads/{}.tar.bz2".format(self.sourcename))
-        tools.replace_in_file(
-            os.path.join(self.sourcename, "CMakeLists.txt"),
-            "project(PhysicsFS)",
-            """project(PhysicsFS)
-include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_basic_setup()""")
+        folder = "{}-{}".format(self.name, self.version)
+        tools.get("https://icculus.org/physfs/downloads/{}.tar.bz2".format(folder))
+        os.rename(folder, self.source_subfolder)
 
     def build(self):
         cmake = CMake(self)
-        cmake.configure(source_folder=self.sourcename)
+        cmake.configure(build_folder=self.build_subfolder)
         cmake.build()
 
     def package(self):
-        self.copy("physfs.h", dst="include", src=os.path.join(self.sourcename, "src"))
+        self.copy("LICENSE.txt", dst="licenses", src=self.source_subfolder)
+        self.copy("physfs.h", dst="include", src=os.path.join(self.source_subfolder, "src"))
         if self.options.shared:
             self.copy("*.dll", dst="bin", keep_path=False)
             self.copy("*.lib", dst="lib", keep_path=False, excludes="*-static.lib")
