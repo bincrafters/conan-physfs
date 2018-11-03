@@ -29,6 +29,7 @@ class PhysfsConan(ConanFile):
 
     def build(self):
         cmake = CMake(self)
+        cmake.definitions["PHYSFS_BUILD_TEST"] = False
         cmake.configure(build_folder=self._build_subfolder)
         cmake.build()
 
@@ -47,3 +48,7 @@ class PhysfsConan(ConanFile):
 
     def package_info(self):
         self.cpp_info.libs = tools.collect_libs(self)
+        if self.settings.os == "Macos":
+            self.cpp_info.exelinkflags.extend(["-framework IOKit",
+                                               "-framework Foundation"])
+            self.cpp_info.sharedlinkflags = self.cpp_info.exelinkflags
