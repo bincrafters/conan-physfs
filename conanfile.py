@@ -16,11 +16,16 @@ class PhysfsConan(ConanFile):
     generators = "cmake"
 
     settings = "os", "compiler", "build_type", "arch"
-    options = {"shared": [True, False]}
-    default_options = "shared=False"
+    options = {"shared": [True, False], "fPIC": [True, False]}
+    default_options = {"shared": False, "fPIC": True}
 
     _source_subfolder = "source_subfolder"
     _build_subfolder = "build_subfolder"
+
+    def config_options(self):
+        del self.settings.compiler.libcxx
+        if self.settings.os == 'Windows':
+            del self.options.fPIC
 
     def source(self):
         folder = "{}-{}".format(self.name, self.version)
