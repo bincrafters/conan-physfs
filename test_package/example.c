@@ -12,4 +12,6 @@ int main()
     {
         printf("physfs successfully deinitialized!\n");
     }
+
+    return 0;
 }
