@@ -6,7 +6,7 @@ class PhysfsConan(ConanFile):
     name = "physfs"
     version = "3.0.1"
     description = "Provides abstract access to various archives"
-    topics = ("conan", "libname", "logging")
+    topics = ("conan", "physfs", "physicsfs", "archive")
     url = "https://github.com/bincrafters/conan-physfs"
     homepage = "https://icculus.org/physfs/"
     author = "Bincrafters <bincrafters@gmail.com>"
