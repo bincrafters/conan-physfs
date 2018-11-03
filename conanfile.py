@@ -5,34 +5,42 @@ import os
 class PhysfsConan(ConanFile):
     name = "physfs"
     version = "stable-3.0"
-    license = "ZLIB"
+    description = "Provides abstract access to various archives"
+    topics = ("conan", "physfs", "physicsfs", "archive")
     url = "https://github.com/bincrafters/conan-physfs"
     homepage = "https://icculus.org/physfs/"
     author = "Bincrafters <bincrafters@gmail.com>"
-    description = "Provides abstract access to various archives"
-    settings = "os", "compiler", "build_type", "arch"
-    options = {"shared": [True, False]}
-    default_options = "shared=False"
-    generators = "cmake"
+    license = "ZLIB"
     exports = "LICENSE.md"
     exports_sources = "CMakeLists.txt"
+    generators = "cmake"
 
-    source_subfolder = "source_subfolder"
-    build_subfolder = "build_subfolder"
+    settings = "os", "compiler", "build_type", "arch"
+    options = {"shared": [True, False], "fPIC": [True, False]}
+    default_options = {"shared": False, "fPIC": True}
+
+    _source_subfolder = "source_subfolder"
+    _build_subfolder = "build_subfolder"
+
+    def config_options(self):
+        del self.settings.compiler.libcxx
+        if self.settings.os == 'Windows':
+            del self.options.fPIC
 
     def source(self):
         folder = "{}-{}".format(self.name, self.version)
         tools.get("https://hg.icculus.org/icculus/physfs/archive/{}.tar.bz2".format(self.version))
-        os.rename(folder, self.source_subfolder)
+        os.rename(folder, self._source_subfolder)
 
     def build(self):
         cmake = CMake(self)
-        cmake.configure(build_folder=self.build_subfolder)
+        cmake.definitions["PHYSFS_BUILD_TEST"] = False
+        cmake.configure(build_folder=self._build_subfolder)
         cmake.build()
 
     def package(self):
-        self.copy("LICENSE.txt", dst="licenses", src=self.source_subfolder)
-        self.copy("physfs.h", dst="include", src=os.path.join(self.source_subfolder, "src"))
+        self.copy("LICENSE.txt", dst="licenses", src=self._source_subfolder)
+        self.copy("physfs.h", dst="include", src=os.path.join(self._source_subfolder, "src"))
         if self.options.shared:
             self.copy("*.dll", dst="bin", keep_path=False)
             self.copy("*.lib", dst="lib", keep_path=False, excludes="*-static.lib")
@@ -45,3 +53,7 @@ class PhysfsConan(ConanFile):
 
     def package_info(self):
         self.cpp_info.libs = tools.collect_libs(self)
+        if self.settings.os == "Macos":
+            self.cpp_info.exelinkflags.extend(["-framework IOKit",
+                                               "-framework Foundation"])
+            self.cpp_info.sharedlinkflags = self.cpp_info.exelinkflags
