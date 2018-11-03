@@ -4,7 +4,7 @@ import os
 
 class PhysfsConan(ConanFile):
     name = "physfs"
-    version = "3.0.1"
+    version = "stable-3.0"
     license = "ZLIB"
     url = "https://github.com/bincrafters/conan-physfs"
     homepage = "https://icculus.org/physfs/"
@@ -22,7 +22,7 @@ class PhysfsConan(ConanFile):
 
     def source(self):
         folder = "{}-{}".format(self.name, self.version)
-        tools.get("https://icculus.org/physfs/downloads/{}.tar.bz2".format(folder))
+        tools.get("https://hg.icculus.org/icculus/physfs/archive/{}.tar.bz2".format(self.version))
         os.rename(folder, self.source_subfolder)
 
     def build(self):
