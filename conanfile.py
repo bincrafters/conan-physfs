@@ -4,7 +4,7 @@ import os
 
 class PhysfsConan(ConanFile):
     name = "physfs"
-    version = "stable-3.0"
+    version = "3.0.1"
     description = "Provides abstract access to various archives"
     topics = ("conan", "physfs", "physicsfs", "archive")
     url = "https://github.com/bincrafters/conan-physfs"
@@ -28,9 +28,8 @@ class PhysfsConan(ConanFile):
             del self.options.fPIC
 
     def source(self):
-        folder = "{}-{}".format(self.name, self.version)
-        tools.get("https://hg.icculus.org/icculus/physfs/archive/{}.tar.bz2".format(self.version))
-        os.rename(folder, self._source_subfolder)
+        tools.get("https://hg.icculus.org/icculus/physfs/archive/stable-3.0.tar.bz2")
+        os.rename("physfs-stable-3.0", self._source_subfolder)
 
     def build(self):
         cmake = CMake(self)
