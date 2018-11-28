@@ -1,5 +1,6 @@
 from conans import ConanFile, CMake, tools
 import os
+import shutil
 
 
 class PhysfsConan(ConanFile):
@@ -57,3 +58,5 @@ class PhysfsConan(ConanFile):
             self.cpp_info.exelinkflags.extend(["-framework IOKit",
                                                "-framework Foundation"])
             self.cpp_info.sharedlinkflags = self.cpp_info.exelinkflags
+        if self.settings.os == "Windows" and self.settings.compiler == "gcc":
+            shutil.move(os.path.join(self.package_folder, "lib", "objects.a"), os.path.join(self.package_folder, "lib", "libobjects.a"))
