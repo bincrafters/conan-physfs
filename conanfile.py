@@ -54,7 +54,7 @@ class PhysfsConan(ConanFile):
             self.copy("*.a", dst="lib", keep_path=False)
         self.copy("*.pdb", dst="lib", keep_path=False)
         if self.settings.os == "Windows" and self.settings.compiler == "gcc":
-            with tools.chdir(os.path.join(self.package_folder, "lib"):
+            with tools.chdir(os.path.join(self.package_folder, "lib")):
                 if os.path.isfile("objects.a"):
                     shutil.move("objects.a", "libobjects.a")
 
