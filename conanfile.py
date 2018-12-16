@@ -1,5 +1,6 @@
 from conans import ConanFile, CMake, tools
 import os
+import shutil
 
 
 class PhysfsConan(ConanFile):
@@ -46,10 +47,16 @@ class PhysfsConan(ConanFile):
             self.copy("*.lib", dst="lib", keep_path=False, excludes="*-static.lib")
             self.copy("*.so*", dst="lib", keep_path=False, symlinks=True)
             self.copy("*.dylib", dst="lib", keep_path=False, symlinks=True)
+            if self.settings.os == "Windows" and self.settings.compiler == "gcc":
+                self.copy("*.a", dst="lib", keep_path=False, symlinks=True)
         else:
             self.copy("*-static.lib", dst="lib", keep_path=False)
             self.copy("*.a", dst="lib", keep_path=False)
         self.copy("*.pdb", dst="lib", keep_path=False)
+        if self.settings.os == "Windows" and self.settings.compiler == "gcc":
+            with tools.chdir(os.path.join(self.package_folder, "lib"):
+                if os.path.isfile("objects.a"):
+                    shutil.move("objects.a", "libobjects.a")
 
     def package_info(self):
         self.cpp_info.libs = tools.collect_libs(self)
