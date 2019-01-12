@@ -2,9 +2,9 @@
 
 | Bintray | Windows | Linux & macOS |
 |:--------:|:---------:|:-----------------:|
-| [ ![Download](https://api.bintray.com/packages/bincrafters/public-conan/physfs%3Abincrafters/images/download.svg) ](https://bintray.com/bincrafters/public-conan/physfs%3Abincrafters/_latestVersion)|[![Build status](https://ci.appveyor.com/api/projects/status/github/bincrafters/conan-physfs?svg=true)](https://ci.appveyor.com/project/bincrafters/conan-physfs)|[![Build Status](https://travis-ci.org/bincrafters/conan-physfs.svg)](https://travis-ci.org/bincrafters/conan-physfs)|
+|[![Download](https://api.bintray.com/packages/bincrafters/public-conan/physfs%3Abincrafters/images/download.svg) ](https://bintray.com/bincrafters/public-conan/physfs%3Abincrafters/_latestVersion)|[![Build status](https://ci.appveyor.com/api/projects/status/github/bincrafters/conan-physfs?svg=true)](https://ci.appveyor.com/project/bincrafters/conan-physfs)|[![Build Status](https://travis-ci.com/bincrafters/conan-physfs.svg)](https://travis-ci.com/bincrafters/conan-physfs)|
 
-## Conan.io Information
+## Conan Information
 
 Bincrafters packages can be found in the following public Conan repository:
 
