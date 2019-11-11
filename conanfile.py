@@ -10,7 +10,6 @@ class PhysfsConan(ConanFile):
     topics = ("conan", "physfs", "physicsfs", "archive")
     url = "https://github.com/bincrafters/conan-physfs"
     homepage = "https://icculus.org/physfs/"
-    author = "Bincrafters <bincrafters@gmail.com>"
     license = "ZLIB"
     exports = "LICENSE.md"
     exports_sources = "CMakeLists.txt"
@@ -25,6 +24,7 @@ class PhysfsConan(ConanFile):
 
     def config_options(self):
         del self.settings.compiler.libcxx
+        del self.settings.compiler.cppstd
         if self.settings.os == 'Windows':
             del self.options.fPIC
 
